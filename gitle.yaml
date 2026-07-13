@@ -1,10 +1,8 @@
-pipeline:
-  run: "cd backend && composer dump-autoload && php artisan key:generate --force && php artisan migrate --force && php -S 0.0.0.0:8000 -t public"
-  port: 8000
-  test: "cd backend && ./vendor/bin/phpunit || true"
-  build: "cd frontend && npm run build"
-  image: "node:18-bookworm"
-  setup: "apt-get update && apt-get install -y php-cli php-mbstring php-xml php-curl php-pgsql unzip git && cd backend && curl -sS https://getcomposer.org/installer | php && php composer.phar install --no-scripts --no-autoloader && cd ../frontend && npm install"
-  services:
-    - postgres
-  autoPreview: true
+{
+  "port": 3000,
+  "image": "node:22-bookworm",
+  "autoPreview": true,
+  "setup": "npm --prefix frontend install",
+  "build": "npm --prefix frontend run build",
+  "run": "npm --prefix frontend run serve"
+}
